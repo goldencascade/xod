@@ -8,6 +8,7 @@ class PopupInstallApp extends React.Component {
 
     this.popup = null;
     this.assignPopupRef = this.assignPopupRef.bind(this);
+    this.hide = this.hide.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     if (!this.props.isVisible && nextProps.isVisible) {
@@ -22,6 +23,7 @@ class PopupInstallApp extends React.Component {
   hide() {
     if (this.popup) {
       this.popup.hide();
+      this.props.onClose();
     }
   }
 
@@ -34,12 +36,30 @@ class PopupInstallApp extends React.Component {
       <SkyLight
         hideOnOverlayClicked
         ref={this.assignPopupRef}
-        title="Oops! You need a desktop IDE!"
+        title="You need the desktop version of XOD IDE"
         afterClose={this.props.onClose}
       >
         <div className="ModalBody">
           <div className="ModalContent">
-            To upload projects you need to install XOD IDE for desktop.
+            Uploading a program requires access to USB ports. <br />
+            Browsers do not provide it for security reasons,&nbsp;
+            so you have to install more permissive IDE for the desktop.
+          </div>
+          <div className="ModalFooter">
+            <a
+              href="https://xod.io/downloads/?campaign=download&medium=upload_dialog"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="Button"
+            >
+              Download
+            </a>
+            <button
+              onClick={this.hide}
+              className="Button"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </SkyLight>
